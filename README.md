@@ -1,5 +1,11 @@
 # FREE AWS Cloud Project Bootcamp
 
+
+docker build -t backend-flask ./backend-flask                                       #builds docker image
+FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask      #runs the image  (Starts a container) 
+
+docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
+
 - Application: Cruddur
 - Cohort: 2023-A1
 
