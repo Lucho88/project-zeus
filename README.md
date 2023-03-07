@@ -1,5 +1,6 @@
 # FREE AWS Cloud Project Bootcamp
-
+export HONEYCOMB_API_KEY="S4pDS3DIYPesLkmqBBB6iD"
+gp env HONEYCOMB_API_KEY="S4pDS3DIYPesLkmqBBB6iD"
 
 docker build -t backend-flask ./backend-flask                                       #builds docker image
 FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask      #runs the image  (Starts a container) 
