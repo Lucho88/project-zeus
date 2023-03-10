@@ -1,6 +1,18 @@
 # FREE AWS Cloud Project Bootcamp
 export HONEYCOMB_API_KEY="S4pDS3DIYPesLkmqBBB6iD"
 gp env HONEYCOMB_API_KEY="S4pDS3DIYPesLkmqBBB6iD"
+export HONEYCOMB_SERVICE_NAME="threebeesknees"
+gp env HONEYCOMB_SERVICE_NAME="threebeesknees"
+
+export AWS_DEFAULT_REGION="eu-west-1"
+gp env AWS_DEFAULT_REGION="eu-west-1"
+
+export AWS_ACCESS_KEY_ID="AKIAZPTVKQLVQJNFDTI2"
+gp env AWS_ACCESS_KEY_ID="AKIAZPTVKQLVQJNFDTI2"
+
+export AWS_SECRET_ACCESS_KEY="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"
+gp env AWS_SECRET_ACCESS_KEY="Py39Pwzu+20HSRpNJJgPsaA/djjjqrUKmH+VlEgC"
+
 
 # Builds docker image
 docker build -t backend-flask ./backend-flask      
