@@ -2,8 +2,11 @@
 export HONEYCOMB_API_KEY="S4pDS3DIYPesLkmqBBB6iD"
 gp env HONEYCOMB_API_KEY="S4pDS3DIYPesLkmqBBB6iD"
 
-docker build -t backend-flask ./backend-flask                                       #builds docker image
-FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask      #runs the image  (Starts a container) 
+# Builds docker image
+docker build -t backend-flask ./backend-flask      
+
+# Runs the image  (Starts a container) 
+FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask      
 
 docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
 
