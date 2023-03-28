@@ -52,20 +52,20 @@ LOGGER.info("test log")
 
 # HoneyComb
 # Initialize tracing and an exporter that can send data to Honeycomb
-provider = TracerProvider()
-processor = BatchSpanProcessor(OTLPSpanExporter())
-provider.add_span_processor(processor)
+#provider = TracerProvider()
+#processor = BatchSpanProcessor(OTLPSpanExporter())
+#provider.add_span_processor(processor)
 
 # X-Ray -------------
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+#xray_url = os.getenv("AWS_XRAY_URL")
+#xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 # HoneyComb - Show this in the logs within the backend-flask app (STDOUT)
-simple_processor = BatchSpanProcessor(ConsoleSpanExporter())
-provider.add_span_processor(simple_processor)
+#simple_processor = BatchSpanProcessor(ConsoleSpanExporter())
+#provider.add_span_processor(simple_processor)
 
-trace.set_tracer_provider(provider)
-tracer = trace.get_tracer(__name__)
+#trace.set_tracer_provider(provider)
+#tracer = trace.get_tracer(__name__)
 
 app = Flask(__name__)
 
@@ -76,11 +76,11 @@ cognito_jwt_token = CognitoJwtToken(
 )
 
 # X-Ray ------------
-XRayMiddleware(app, xray_recorder)
+#XRayMiddleware(app, xray_recorder)
 
 #HoneyComb - initialize automatic instrumentation with Flask
-FlaskInstrumentor().instrument_app(app)
-RequestsInstrumentor().instrument()
+#FlaskInstrumentor().instrument_app(app)
+#RequestsInstrumentor().instrument()
 
 
 frontend = os.getenv('FRONTEND_URL')
@@ -160,7 +160,7 @@ def data_create_message():
   return
 
 @app.route("/api/activities/home", methods=['GET'])
-@xray_recorder.capture('activities_home')
+#@xray_recorder.capture('activities_home')
 def data_home():
   app.logger.debug(request.headers)
   access_token = CognitoJwtToken.extract_access_token(request.headers)
