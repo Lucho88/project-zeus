@@ -6,7 +6,6 @@ tasks:
       cd /workspace
       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       unzip awscliv2.zip
-      A
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
   - name: postgres
@@ -15,11 +14,10 @@ tasks:
       echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
       sudo apt update
       sudo apt install -y postgresql-client-13 libpq-dev
-
     command: |
       export GITPOD_IP=$(curl ifconfig.me)
       source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds-update-sg-rule"
-  - name: react-js    
+  - name: react-js
     command: |
       cd frontend-react-js
       npm i
@@ -27,6 +25,7 @@ vscode:
   extensions:
     - 42Crunch.vscode-openapi
     - cweijan.vscode-postgresql-client2
+
 ports:
   - name: frontend
     port: 3000
