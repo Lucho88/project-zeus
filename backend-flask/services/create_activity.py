@@ -30,7 +30,6 @@ class CreateActivity:
         ttl_offset = timedelta(hours=1) 
       else:
         model['errors'] = ['ttl_blank']
-
       if user_handle == None or len(user_handle) < 1:
         model['errors'] = ['user_handle_blank']
 
@@ -38,15 +37,14 @@ class CreateActivity:
         model['errors'] = ['message_blank'] 
       elif len(message) > 280:
         model['errors'] = ['message_exceed_max_chars'] 
-
       if model['errors']:
         model['data'] = {
           'handle':  user_handle,
           'message': message
         }   
-
       else:
-        self.create_activity()
+        expires_at = (now + ttl_offset)
+        create_activity(user_handle, message, expires_at)
         model['data'] = {
           'uuid': uuid.uuid4(),
           'display_name': 'Andrew Brown',
@@ -56,19 +54,13 @@ class CreateActivity:
           'expires_at': (now + ttl_offset).isoformat()
         }
       return model
-
-      def create_activity(user_uuid, message, expires_at):
-        sql = f"""
-      INSERT INTO (
-        user_uuid
-        message
-        expires_at
-      )
-      VALUES (
-        '{user_uuid}',
-        '{message}',
-        '{expires_at}'
-      )
-      """
-      #query_commit(sql)
-    
+      def create_activity(handle, message, expires_at):
+        sql = db.load_sql('create_activity')
+        
+        """
+        uuid = query_commit(db.,{
+        'handle': handle, 
+        'message': message, 
+        'expires_at': expires_at
+        })
+  #def query_object_activity():
