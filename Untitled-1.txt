@@ -11,3 +11,37 @@ aws ec2 modify-security-group-rules \
     --group-id $DB_SG_ID \
     --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={Description=GITPOD,IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
 
+aws ecs create-cluster --cluster-name threebees --service-connect-defaults namespace=threebees
+
+aws ecr create-repository --repository-name threebees-python --image-tag-mutability MUTABLE
+
+
+export DEFAULT_VPC_ID=$(aws ec2 describe-vpcs \
+--filters "Name=isDefault, Values=true" \
+--query "Vpcs[0].VpcId" \
+--output text)
+
+export THREEBEES_SERVICE_SG=$(aws ec2 create-security-group \
+  --group-name "threebees-srv-sg" \
+  --description "Security group for Threebees services on ECS" \
+  --vpc-id $DEFAULT_VPC_ID \
+  --query "GroupId" --output text)
+
+  
+  aws ec2 authorize-security-group-ingress \
+  --group-id $THREEBEES_SERVICE_SG \
+  --protocol tcp \
+  --port 80 \
+  --cidr 0.0.0.0/0
+
+
+#connect to the task
+  aws ecs execute-command  \
+--region $AWS_DEFAULT_REGION \
+--cluster threebees \
+--task 2773fca3ca6c4f929876e7225d06f4f1 \
+--container backend-flask \
+--command "/bin/bash" \
+--interactive
+
+

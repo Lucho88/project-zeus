@@ -1,4 +1,4 @@
-FROM python:3.10-slim-buster
+FROM 652007342827.dkr.ecr.eu-west-1.amazonaws.com/threebees-python:3.10-slim-buster
 
 # Inside Container
 # Make a new folder inside the container 
@@ -20,7 +20,7 @@ COPY . .
 
 # Set Eviroment Variables
 # Inside Container - will remain set when the container is running
-ENV FLASK_ENV=development
+ENV FLASK_DEBUG=1
 
 EXPOSE ${PORT}
 
