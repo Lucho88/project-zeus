@@ -11,8 +11,17 @@
     "containerDefinitions": [
       {
         "name": "frontend-react-js",
-        "image": "387543059434.dkr.ecr.ca-central-1.amazonaws.com/frontend-react-js",
+        "image": "652007342827.dkr.ecr.eu-west-1.amazonaws.com/frontend-react-js",
         "essential": true,
+        "healthCheck": {
+          "command": [
+            "CMD-SHELL",
+            "curl -f http://localhost:3000 || exit 1"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "retries": 3
+        },
         "portMappings": [
           {
             "name": "frontend-react-js",
@@ -25,8 +34,8 @@
         "logConfiguration": {
           "logDriver": "awslogs",
           "options": {
-              "awslogs-group": "cruddur",
-              "awslogs-region": "ca-central-1",
+              "awslogs-group": "threebees",
+              "awslogs-region": "eu-west-1",
               "awslogs-stream-prefix": "frontend-react-js"
           }
         }

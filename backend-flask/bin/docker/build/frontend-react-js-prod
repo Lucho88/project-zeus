@@ -1,0 +1,10 @@
+#! /usr/bin/bash
+
+docker build \
+--build-arg REACT_APP_BACKEND_URL="https://api.threebeesknees.co.uk" \
+--build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
+--build-arg REACT_APP_AWS_COGNITO_REGION="$AWS_DEFAULT_REGION" \
+--build-arg REACT_APP_AWS_USER_POOLS_ID="eu-west-1_7IhDddeJf" \
+--build-arg REACT_APP_CLIENT_ID="2lofh72buuh2ovukn5gjj6rv71" \
+-t frontend-react-js \
+-f Dockerfile.prod \

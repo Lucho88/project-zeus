@@ -44,8 +44,8 @@
           {"name": "OTEL_EXPORTER_OTLP_ENDPOINT", "value": "https://api.honeycomb.io"},
           {"name": "AWS_COGNITO_USER_POOL_ID", "value": "eu-west-1_7IhDddeJf"},
           {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "2lofh72buuh2ovukn5gjj6rv71"},
-          {"name": "FRONTEND_URL", "value": "*"},
-          {"name": "BACKEND_URL", "value": "*"},
+          {"name": "FRONTEND_URL", "value": "https://threebeesknees.co.uk"},
+          {"name": "BACKEND_URL", "value": "https://api.threebeesknees.co.uk"},
           {"name": "AWS_DEFAULT_REGION", "value": "eu-west-1"}
         ],
         "secrets": [
