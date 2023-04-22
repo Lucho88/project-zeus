@@ -1,9 +1,6 @@
-master-username threebeesroo
+master-username threebeesroot
 master-user-password dbpassword123
 
-export CONNECTION_URL="postgresql://postgres:password@localhost:5432/threebees"
-gp env CONNECTION_URL="postgresql://postgres:password@localhost:5432/threebees"
-  
 export PROD_CONNECTION_URL="postgresql://threebeesroot:dbpassword123@threebees-db-instance.cfryqozdhn84.eu-west-1.rds.amazonaws.com:5432/threebees"
 gp env PROD_CONNECTION_URL="postgresql://threebeesroot:dbpassword123@threebees-db-instance.cfryqozdhn84.eu-west-1.rds.amazonaws.com:5432/threebees"
 
@@ -73,3 +70,7 @@ docker run -rm \
 -e AWS_COGNITO_USER_POOL_ID="${AWS_COGNITO_USER_POOL_ID}" \
 -e AWS_COGNITO_USER_POOL_CLIENT_ID="2lofh72buuh2ovukn5gjj6rv71" \   
 -it backend-flask-prod
+
+
+aws ecs create-service --cli-input-json file://aws/json/service-backend-flask.json
+aws ecs create-service --cli-input-json file://aws/json/service-frontend-react-js.json
