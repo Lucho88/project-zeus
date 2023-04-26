@@ -35,13 +35,7 @@ aws ecs register-task-definition --cli-input-json file://aws/task-definitions/ba
 
 
 #connect to the task
-  aws ecs execute-command  \
---region $AWS_DEFAULT_REGION \
---cluster threebees \
---task 2773fca3ca6c4f929876e7225d06f4f1 \
---container backend-flask \
---command "/bin/bash" \
---interactive
+  aws ecs execute-command --region $AWS_DEFAULT_REGION --cluster threebees --task 6f2a521e56fc45f9b0ac75d2a9662c3c --container backend-flask --command "/bin/bash" --interactive
 
 
 docker build \

@@ -1,38 +1,23 @@
 version: "3.8"
 services:
   backend-flask:
-    environment:
-      #CONNECTION_URL: "${PROD_CONNECTION_URL}"
-      #AWS_ENDPOINT_URL: "http://dynamodb-local:8000/threebees"
-      CONNECTION_URL: "postgresql://postgres:password@db:5432/threebees"
-      FRONTEND_URL: "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-      BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-      OTEL_SERVICE_NAME: "backend-flask"
-      OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"
-      OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"
-      AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
-      AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
-      AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
-      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
-      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
-      ROLLBAR_ACCESS_TOKEN: "${ROLLBAR_ACCESS_TOKEN}"
-      AWS_COGNITO_USER_POOL_ID: 'eu-west-1_7IhDddeJf'
-      AWS_COGNITO_USER_POOL_CLIENT_ID: '2lofh72buuh2ovukn5gjj6rv71'
+    env_file:
+      - .env.backend-flask
     build: ./backend-flask
     ports:
       - "4567:4567"
+    networks:
+      - threebees-net
     volumes:
       - ./backend-flask:/backend-flask
   frontend-react-js:
-    environment:
-      REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-      REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAULT_REGION}"
-      REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAULT_REGION}"
-      REACT_APP_AWS_USER_POOLS_ID: "eu-west-1_7IhDddeJf"
-      REACT_APP_CLIENT_ID: "2lofh72buuh2ovukn5gjj6rv71"
+    env_file:
+      - .env.frontend-react-js
     build: ./frontend-react-js
     ports:
       - "3000:3000"
+    networks:
+      - threebees-net
     volumes:
       - ./frontend-react-js:/frontend-react-js
   dynamodb-local:
@@ -44,6 +29,8 @@ services:
     container_name: dynamodb-local
     ports:
       - "8000:8000"
+    networks:
+      - threebees-net
     volumes:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
@@ -55,24 +42,28 @@ services:
       - POSTGRES_PASSWORD=password
     ports:
       - '5432:5432'
+    networks:
+      - threebees-net
     volumes: 
       - db:/var/lib/postgresql/data
   xray-daemon:
-      image: "amazon/aws-xray-daemon"
-      environment:
-        AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
-        AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
-        AWS_REGION: "${AWS_REGION}"
-      command:
+    image: "amazon/aws-xray-daemon"
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_REGION: "${AWS_REGION}"
+    command:
         - "xray -o -b xray-daemon:2000"
-      ports:
-        - 2000:2000/udp
+    ports:
+      - 2000:2000/udp
+    networks:
+      - threebees-net
 # the name flag is a hack to change the default prepend folder
 # name when outputting the image names
 networks: 
-  internal-network:
+  threebees-net:
     driver: bridge
-    name: cruddur
+    name: threebees-net
 volumes:
   db:
     driver: local

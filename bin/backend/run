@@ -4,13 +4,13 @@ ABS_PATH=$(readlink -f "$0")
 BACKEND_PATH=$(dirname $ABS_PATH)
 BIN_PATH=$(dirname $BACKEND_PATH)
 PROJECT_PATH=$(dirname $BIN_PATH)
-ENVFILE_PATH="$PROJECT_PATH/backend-flask.env"
+ENVFILE_PATH="$PROJECT_PATH/.env.backend-flask"
 
 docker run --rm \
   --env-file $ENVFILE_PATH \
   --network threebees-net \
   --publish 4567:4567 \
-  -it backend-flask-prod
+  -it backend-flask-prod /bin/bash
 
 #  --env AWS_ENDPOINT_URL="http://dynamodb-local:8000" \
 #  --env CONNECTION_URL="postgresql://postgres:password@db:5432/cruddur" \
