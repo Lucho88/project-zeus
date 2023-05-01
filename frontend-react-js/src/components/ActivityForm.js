@@ -70,7 +70,7 @@ export default function ActivityForm(props) {
         />
         <div className='submit'>
           <div className={classes.join(' ')}>{240-count}</div>
-          <button type='submit'>Crud</button>
+          <button type='submit'>Post</button>
           <div className='expires_at_field'>
             <BombIcon className='icon' />
             <select

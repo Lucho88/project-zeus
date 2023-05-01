@@ -12,7 +12,7 @@ export default function JoinSection(props) {
           Have something you want to say?
         </p>
         <p>
-          Don't think about it, just crud it!
+          Don't think about it, just say it!
         </p>
         <p>
           Regret it? No worries, We'll forget it...
